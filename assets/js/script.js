@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     for (let button of buttons) {
         button.addEventListener('click', function () {
             if (this.getAttribute('data-type') === 'submit') {
-                alert("You Clicked Submit!");
+                checkAnswer();
             } else {
                 let gameType = this.getAttribute('data-type');
                 runGame(gameType);
@@ -28,10 +28,30 @@ function runGame(gameType) {
     
 }
 function checkAnswer() {
+    let userAnswer = parseInt(document.getElementById('answer-box').value);
+    let calculatedAnswer = calculateCorrectAnswer();
+    let isCorrect = userAnswer === calculatedAnswer[0];
 
+    if (isCorrect){
+        alert("Hey you are Correct!");
+    } else {
+        alert(`Sorry, that's not correct! ${userAnswer} the correct answer was ${calculatedAnswer[0]}!`);
+    }
+
+    runGame(calculatedAnswer[1]);
 }
 function calculateCorrectAnswer() {
+    let operand1 = parseInt(document.getElementById('operand1').innerHTML);
+    let operand2 = parseInt(document.getElementById('operand2').innerHTML);
+    let operator = document.getElementById('operator').innerHTML;
 
+    if (operator === "+"){
+        return [operand1 + operand2, "addition"];
+    } else {
+        alert(`unknown operator ${operator}`);
+        throw `unknown operator ${operator}. Aborting!`;
+    }
+        
 }
 function incrementScore() {
 
